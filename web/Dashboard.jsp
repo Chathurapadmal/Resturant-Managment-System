@@ -125,11 +125,11 @@
     <div class="cards">
         <div class="card">
             <div>Today Orders</div>
-            <h2>34</h2> <!-- Ideally dynamic -->
+            <h2><%= request.getAttribute("todaysOrders") != null ? request.getAttribute("todaysOrders") : 0 %></h2>
         </div>
         <div class="card">
             <div>Today Sales</div>
-            <h2>3500</h2> <!-- Ideally dynamic -->
+            <h2><%= request.getAttribute("todaysSales") != null ? request.getAttribute("todaysSales") : 0 %></h2>
         </div>
     </div>
 
@@ -143,7 +143,7 @@
         </tr>
         <%
             List<Order> orders = (List<Order>) request.getAttribute("orders");
-            if (orders != null) {
+            if (orders != null && !orders.isEmpty()) {
                 for (Order o : orders) {
         %>
         <tr>
@@ -162,13 +162,11 @@
 
     <div class="section-title">Sales Summary</div>
     <div class="chart">
-        <!-- You can insert a chart here using Chart.js or an image placeholder -->
         <p>Sales Chart Placeholder</p>
     </div>
 
     <div class="section-title">Top Selling Items</div>
     <div class="top-items">
-        <!-- List your top items or charts here -->
         <p>Top Selling Items Placeholder</p>
     </div>
 
