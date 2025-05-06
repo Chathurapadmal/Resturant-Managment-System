@@ -2,7 +2,6 @@ package controller;
 
 import dao.UserDAO;
 import model.UserServlet;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
