@@ -1,6 +1,6 @@
 package dao;
 
-import model.PosPageServlet;
+import Controller.PosPageServlet;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

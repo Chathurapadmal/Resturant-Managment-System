@@ -1,6 +1,6 @@
 package dao;
 
-import model.UserServlet;
+import Controller.User;
 import java.sql.*;
 
 public class UserDAO {
@@ -14,15 +14,14 @@ public class UserDAO {
         }
     }
 
-    public UserServlet login(String username, String password) {
-        UserServlet user = null;
-        String sql = "SELECT * FROM users WHERE username=? AND password=?";
+    public User validateUser(String username, String password) {
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
             ps.setString(2, password);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    user = new UserServlet(
+                    return new User(
                         rs.getInt("id"),
                         rs.getString("username"),
                         rs.getString("password"),
@@ -33,6 +32,10 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+        return null;
+    }
+
+    public User login(String username, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

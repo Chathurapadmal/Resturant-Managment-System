@@ -70,28 +70,16 @@
     </style>
 </head>
 <body>
-
-<div class="login-box">
-    <h2>Login</h2>
-
-    <!-- Display error message if present -->
-    <c:if test="${not empty error}">
-        <div class="error">${error}</div>
-    </c:if>
-
-    <form action="UserControll" method="post">
-        <input type="hidden" name="action" value="login">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username" required placeholder="Enter username">
+    <div class="login-box">
+        <h2>Login</h2>
+        <form action="LoginServlet" method="post">
+            <input type="text" name="username" placeholder="Username" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <button type="submit">Login</button>
+        </form>
+        <div class="error">
+            <%= request.getAttribute("error") != null ? request.getAttribute("error") : "" %>
         </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required placeholder="Enter password">
-        </div>
-        <button type="submit">Login</button>
-    </form>
-</div>
-
+    </div>
 </body>
 </html>

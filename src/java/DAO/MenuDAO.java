@@ -1,6 +1,6 @@
 package dao;
 
-import model.MenuItemServlet;
+import Controller.MenuItemServlet;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
