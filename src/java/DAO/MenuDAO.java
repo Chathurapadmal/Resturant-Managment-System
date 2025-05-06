@@ -1,4 +1,4 @@
-package dao;
+package DAO;
 
 import Controller.MenuItemServlet;
 import java.sql.*;
