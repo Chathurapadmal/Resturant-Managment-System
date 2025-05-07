@@ -1,26 +1,27 @@
-package Controller;
+package Model;
 
-import Model.*;
-
-public class MenuItemServlet {
+public class MenuItem {
     private int id;
     private String name;
     private double price;
     private String description;
+    private String imagePath;
 
-    public MenuItemServlet() {}
+    public MenuItem() {}
 
-    public MenuItemServlet(int id, String name, double price, String description) {
+    public MenuItem(int id, String name, double price, String description, String imagePath) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
+        this.imagePath = imagePath;
     }
 
-    public MenuItemServlet(String name, double price, String description) {
+    public MenuItem(String name, double price, String description, String imagePath) {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.imagePath = imagePath;
     }
 
     // Getters & Setters
@@ -54,5 +55,13 @@ public class MenuItemServlet {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

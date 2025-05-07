@@ -1,6 +1,6 @@
 package DAO;
 
-import Controller.MenuItemServlet;
+import Controller.MenuServlet;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +16,13 @@ public class MenuDAO {
         }
     }
 
-    public List<MenuItemServlet> getAllMenuItems() {
-        List<MenuItemServlet> items = new ArrayList<>();
+    public List<MenuServlet> getAllMenuItems() {
+        List<MenuServlet> items = new ArrayList<>();
         String sql = "SELECT * FROM menu_items";
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                items.add(new MenuItemServlet(
+                items.add(new MenuServlet(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
@@ -35,7 +35,7 @@ public class MenuDAO {
         return items;
     }
 
-    public void insertMenuItem(MenuItemServlet item) {
+    public void insertMenuItem(MenuServlet item) {
         String sql = "INSERT INTO menu_items (name, price, description) VALUES (?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, item.getName());
@@ -47,14 +47,14 @@ public class MenuDAO {
         }
     }
 
-    public MenuItemServlet getMenuItemById(int id) {
-        MenuItemServlet item = null;
+    public MenuServlet getMenuItemById(int id) {
+        MenuServlet item = null;
         String sql = "SELECT * FROM menu_items WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    item = new MenuItemServlet(
+                    item = new MenuServlet(
                             rs.getInt("id"),
                             rs.getString("name"),
                             rs.getDouble("price"),
@@ -68,7 +68,7 @@ public class MenuDAO {
         return item;
     }
 
-    public void updateMenuItem(MenuItemServlet item) {
+    public void updateMenuItem(MenuServlet item) {
         String sql = "UPDATE menu_items SET name=?, price=?, description=? WHERE id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, item.getName());

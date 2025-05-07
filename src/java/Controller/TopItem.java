@@ -1,16 +1,20 @@
 package Controller;
 
-import Model.*;
-
 public class TopItem {
-    private final String label;
-    private final int value;
+    private String name;      // for item name or date
+    private int totalSold;    // for quantity or daily total
 
-    public TopItem(String label, int value) {
-        this.label = label;
-        this.value = value;
+    public TopItem(String name, int totalSold) {
+        this.name = name;
+        this.totalSold = totalSold;
     }
 
-    public String getLabel() { return label; }
-    public int getValue() { return value; }
+
+    public int getTotalSold() {
+        return totalSold;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
