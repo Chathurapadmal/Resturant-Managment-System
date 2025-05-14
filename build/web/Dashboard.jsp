@@ -16,45 +16,27 @@
     <title>Admin Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-
-    
-    
-    <style>
-        body { font-family: Arial, sans-serif; margin:0; padding:0; background:#fff; }
-        .header { background:#f97c0d; padding:20px; color:#fff; display:flex; justify-content:space-between; align-items:center; }
-        .logo { font-size:24px; font-weight:bold; }
-        .profile { background:#fff; color:#f97c0d; padding:10px 20px; border-radius:20px; text-decoration:none; font-weight:bold; }
-        .nav { display:flex; justify-content:center; gap:20px; background:#f9d6b5; padding:15px; }
-        .nav form { display:inline; }
-        .nav button { padding:10px 15px; background:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; }
-        .cards { display:flex; justify-content:center; gap:30px; padding:20px; }
-        .card { background:#ffe8d6; padding:20px; border-radius:10px; text-align:center; box-shadow:2px 2px 5px rgba(0,0,0,0.1); width:200px; }
-        .card h2 { margin:0; font-size:36px; color:#f97c0d; }
-        .section-title { background:#f97c0d; color:white; padding:10px; margin:20px; border-radius:10px; font-size:18px; }
-        table { width:90%; margin:0 auto 30px; border-collapse:collapse; text-align:center; background:#ffe8d6; }
-        th, td { padding:12px; border-bottom:1px solid #f97c0d; }
-        th { background:#f97c0d; color:white; }
-        .chart-container { width:90%; margin:0 auto 30px; background:#ffe8d6; padding:20px; border-radius:10px; }
-        .top-items { width:90%; margin:0 auto 30px; background:#ffe8d6; padding:20px; border-radius:10px; text-align:center; }
-    </style>
+    <link href="Style/Dashboard.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-
-    <div class="header">
-        <div class="logo">INFINITY DINE - ADMIN PANEL</div>
-        <a href="profile.jsp" class="profile">Profile</a>
-    </div>
-
-    <div class="nav">
+  <header class="header">
+<div class="logo">
+  <img src="logo.png" alt="Infinity Dine Logo" class="logo-img" />
+</div>   
+ <div class="title">ADMIN PANEL</div>
+    <div class="profile.jsp">Profile</div>
+  </header>
+    
+      <nav class="navbar">
         <form action="orderListServlet"><button>Order List</button></form>
         <form action="KitchenDashboardServlet"><button>Kitchen Dashboard</button></form>
         <form action="POSServlet"><button>POS Invoice</button></form>
-        <form action="addProduct.jsp"><button>Add Product</button></form>
-    </div>
+        <form action="add_item.jsp"><button>Add Product</button></form>
 
-    <div class="cards">
+  </nav>
+
+
+    <section class="summary-cards">
         <div class="card">
             <div>Today Orders</div>
             <h2><%= request.getAttribute("todaysOrders") != null ? request.getAttribute("todaysOrders") : 0 %></h2>
@@ -63,7 +45,7 @@
             <div>Today Sales</div>
             <h2><%= request.getAttribute("todaysSales") != null ? request.getAttribute("todaysSales") : 0 %></h2>
         </div>
-    </div>
+    </section>
 
     <div class="section-title">Order Summary</div>
     
