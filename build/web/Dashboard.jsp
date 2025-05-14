@@ -16,14 +16,31 @@
     <title>Admin Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<<<<<<< HEAD
     <link href="Style/Dashboard.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
   <header class="header">
+=======
+   
+    <link href="css/Dashboard.css" rel="stylesheet" type="text/css"/>
+
+
+    
+    
+ 
+</head>
+<<<<<<< HEAD
+
+<body>
+  <!-- Header -->
+   <header class="header">
+>>>>>>> ed253841d6aba8e6a433af89e6a03f2ba6c81544
 <div class="logo">
   <img src="logo.png" alt="Infinity Dine Logo" class="logo-img" />
 </div>   
  <div class="title">ADMIN PANEL</div>
+<<<<<<< HEAD
     <div class="profile.jsp">Profile</div>
   </header>
     
@@ -46,15 +63,67 @@
             <h2><%= request.getAttribute("todaysSales") != null ? request.getAttribute("todaysSales") : 0 %></h2>
         </div>
     </section>
+=======
+    <div class="profile-btn">Profile</div>
+  </header>
+  
+  
+   <!-- nav -->
+  <nav class="navbar">
+    <form action="orderListServlet" ><button class="active">Order List</button></form>
+    <form action="kitchenDashboardServlet"><button>Kitchen Dashboard</button></form>
+    <form action="posInvoiceServlet"><button>POS Invoice</button></form>
+    <form action="addProduct.jsp"><button>Add Product</button></form>
+=======
+<body>
+>>>>>>> d777b79c2c0ca39d1242631e96bbd787bdea753b
 
-    <div class="section-title">Order Summary</div>
-    
+  </nav>
+   
+  
+  <section class="summary-cards">
+    <div class="card">
+      <div class="card-title">Today orders</div>
+      <div class="card-value"><%= request.getAttribute("todaysOrders") != null ? request.getAttribute("todaysOrders") : 0 %></div>
+    </div>
+<<<<<<< HEAD
+    <div class="card">
+      <div class="card-title">Today Sales</div>
+      <div class="card-value"><%= request.getAttribute("todaysSales") != null ? request.getAttribute("todaysSales") : 0 %></div>
+=======
+
+    <div class="nav">
+        <form action="orderListServlet"><button>Order List</button></form>
+        <form action="KitchenDashboardServlet"><button>Kitchen Dashboard</button></form>
+        <form action="POSServlet"><button>POS Invoice</button></form>
+        <form action="addProduct.jsp"><button>Add Product</button></form>
+>>>>>>> d777b79c2c0ca39d1242631e96bbd787bdea753b
+    </div>
+  </section>
+
+>>>>>>> ed253841d6aba8e6a433af89e6a03f2ba6c81544
+
+   <h2 class="section-title">Order Summary</h2>
+    <table class="order-table">
+      <thead>
         <tr>
-            <th>Customer Name</th>
-            <th>Phone Number</th>
-            <th>Order Number</th>
-            <th>Table Number</th>
+          <th>Customer Name</th>
+          <th>Phone Number</th>
+          <th>Order Number</th>
+          <th>Table Number</th>
         </tr>
+      </thead>
+      <tbody>
+        <!-- Repeat this row as needed -->
+        <tr>
+          <td>Pasindu Milan</td>
+          <td>+947699899345</td>
+          <td>46523</td>
+          <td>1</td>
+        </tr>
+        <!-- More rows -->
+      </tbody>
+    </table>
         <%
             List<Order> orders = (List<Order>) request.getAttribute("orders");
             if (orders != null && !orders.isEmpty()) {
@@ -68,9 +137,9 @@
                 }
             } else {
         %>
-        <tr>
+          <tr>
             <td colspan="4">No orders available.</td>
-        </tr>
+          </tr>
         <% } %>
     
 
