@@ -3,32 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/Order.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Pospage.jsp</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/BillServlet.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/TableServlet.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/FeedbackServlet.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Menu.jsp</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/ProductDAO.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/MenuItem.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Login.jsp</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/MenuServlet.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Dashboard.jsp</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/ProductServlet.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/DashboardDAO.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/Inventory.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/Order.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/MenuDAO.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/PosPageServlet.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/OrderItemServlet.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/DashboardServlet.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/dbdao.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/Userm.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/product.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/OrderDAO.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/UserDAO.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/LoginServlet.java</file>
-            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/TopItem.java</file>
+            <file>file:/C:/Users/sar4n/Desktop/project/Resturant-Managment-System/src/java/Controller/LoginServlet.java</file>
+            <file>file:/C:/Users/sar4n/Desktop/project/Resturant-Managment-System/src/java/DAO/dbdao.java</file>
+            <file>file:/C:/Users/sar4n/Desktop/project/Resturant-Managment-System/web/Dashboard.jsp</file>
+            <file>file:/C:/Users/sar4n/Desktop/project/Resturant-Managment-System/src/java/Controller/FeedbackServlet.java</file>
+            <file>file:/C:/Users/sar4n/Desktop/project/Resturant-Managment-System/src/java/Controller/DashboardServlet.java</file>
         </group>
     </open-files>
 </project-private>
