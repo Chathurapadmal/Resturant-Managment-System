@@ -1,10 +1,9 @@
 package DAO;
 
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import Controller.Order;
+import Model.Order;
 import Controller.TopItem;
 
 public class DashboardDAO {
@@ -13,12 +12,13 @@ public class DashboardDAO {
 
     public DashboardDAO() {
         try {
-            conn = dbdao.getConnection(); // using your dbdao class
+            conn = dbdao.getConnection(); // Using your dbdao class
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    // Get today's total number of orders
     public int getTodayOrdersCount() {
         String sql = "SELECT COUNT(*) FROM orders WHERE DATE(order_date) = CURDATE()";
         try (PreparedStatement ps = conn.prepareStatement(sql);
@@ -32,6 +32,7 @@ public class DashboardDAO {
         return 0;
     }
 
+    // Get today's total sales
     public double getTodaySalesTotal() {
         String sql = "SELECT SUM(total_amount) FROM orders WHERE DATE(order_date) = CURDATE()";
         try (PreparedStatement ps = conn.prepareStatement(sql);
@@ -45,32 +46,36 @@ public class DashboardDAO {
         return 0.0;
     }
 
+    // Get today's orders (basic view)
     public List<Order> getTodayOrders() {
         List<Order> orders = new ArrayList<>();
-        String sql = "SELECT c.name, c.phone, o.id AS order_number, o.table_number " +
-                     "FROM orders o JOIN customers c ON o.customer_id = c.id " +
-                     "WHERE DATE(o.order_date) = CURDATE()";
+
+        String sql = "SELECT id, table_id, phone, cashier_name FROM orders WHERE DATE(order_date) = CURDATE()";
+
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                orders.add(new Order(
-                        rs.getString("name"),
-                        rs.getString("phone"),
-                        rs.getInt("order_number"),
-                        rs.getInt("table_number")
-                ));
+                Order order = new Order();
+                order.setId(rs.getInt("id"));
+                order.setTableId(rs.getInt("table_id"));
+                order.setPhone(rs.getString("phone"));
+                order.setCashierName(rs.getString("cashier_name"));
+                orders.add(order);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return orders;
     }
 
+    // Top 5 selling menu items
     public List<TopItem> getTopSellingItems() {
         List<TopItem> items = new ArrayList<>();
         String sql = "SELECT m.name, SUM(oi.quantity) AS total_sold " +
                      "FROM order_items oi JOIN menu_items m ON oi.menu_item_id = m.id " +
                      "GROUP BY oi.menu_item_id ORDER BY total_sold DESC LIMIT 5";
+
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -79,13 +84,16 @@ public class DashboardDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return items;
     }
 
+    // Daily sales summary (for charting, analytics)
     public List<TopItem> getSalesSummary() {
         List<TopItem> sales = new ArrayList<>();
-        String sql = "SELECT DATE(order_date) as day, SUM(total_amount) AS daily_total " +
+        String sql = "SELECT DATE(order_date) AS day, SUM(total_amount) AS daily_total " +
                      "FROM orders GROUP BY DATE(order_date) ORDER BY DATE(order_date)";
+
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -94,6 +102,7 @@ public class DashboardDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return sales;
     }
 }

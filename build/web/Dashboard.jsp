@@ -40,7 +40,7 @@
         .top-items { width:90%; margin:0 auto 30px; background:#ffe8d6; padding:20px; border-radius:10px; text-align:center; }
     </style>
 </head>
-
+<body>
 
     <div class="header">
         <div class="logo">INFINITY DINE - ADMIN PANEL</div>
@@ -49,8 +49,8 @@
 
     <div class="nav">
         <form action="orderListServlet"><button>Order List</button></form>
-        <form action="kitchenDashboardServlet"><button>Kitchen Dashboard</button></form>
-        <form action="posInvoiceServlet"><button>POS Invoice</button></form>
+        <form action="KitchenDashboardServlet"><button>Kitchen Dashboard</button></form>
+        <form action="POSServlet"><button>POS Invoice</button></form>
         <form action="addProduct.jsp"><button>Add Product</button></form>
     </div>
 
@@ -79,7 +79,7 @@
                 for (Order o : orders) {
         %>
         
-            <td><%= o.getCustomerName() %></td>
+            <td><%= o.getCashierName() %></td>
   
         
         <% 
@@ -178,5 +178,5 @@
         });
     </script>
 
-
+</body>
 </html>
