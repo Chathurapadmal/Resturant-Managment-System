@@ -24,6 +24,7 @@
     
  
 </head>
+<<<<<<< HEAD
 
 <body>
   <!-- Header -->
@@ -42,6 +43,9 @@
     <form action="kitchenDashboardServlet"><button>Kitchen Dashboard</button></form>
     <form action="posInvoiceServlet"><button>POS Invoice</button></form>
     <form action="addProduct.jsp"><button>Add Product</button></form>
+=======
+<body>
+>>>>>>> d777b79c2c0ca39d1242631e96bbd787bdea753b
 
   </nav>
    
@@ -51,9 +55,18 @@
       <div class="card-title">Today orders</div>
       <div class="card-value"><%= request.getAttribute("todaysOrders") != null ? request.getAttribute("todaysOrders") : 0 %></div>
     </div>
+<<<<<<< HEAD
     <div class="card">
       <div class="card-title">Today Sales</div>
       <div class="card-value"><%= request.getAttribute("todaysSales") != null ? request.getAttribute("todaysSales") : 0 %></div>
+=======
+
+    <div class="nav">
+        <form action="orderListServlet"><button>Order List</button></form>
+        <form action="KitchenDashboardServlet"><button>Kitchen Dashboard</button></form>
+        <form action="POSServlet"><button>POS Invoice</button></form>
+        <form action="addProduct.jsp"><button>Add Product</button></form>
+>>>>>>> d777b79c2c0ca39d1242631e96bbd787bdea753b
     </div>
   </section>
 
@@ -85,7 +98,7 @@
                 for (Order o : orders) {
         %>
         
-            <td><%= o.getCustomerName() %></td>
+            <td><%= o.getCashierName() %></td>
   
         
         <% 
@@ -184,5 +197,5 @@
         });
     </script>
 
-
+</body>
 </html>

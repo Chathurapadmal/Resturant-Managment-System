@@ -30,7 +30,7 @@ public class DashboardServlet extends HttpServlet {
 
         int todaysOrders = dao.getTodayOrdersCount();
         double todaysSales = dao.getTodaySalesTotal();
-        List<Controller.Order> orders = dao.getTodayOrders();
+        List<Model.Order> orders = dao.getTodayOrders();
         List<TopItem> topItems = dao.getTopSellingItems();
         List<TopItem> salesSummary = dao.getSalesSummary();
 
