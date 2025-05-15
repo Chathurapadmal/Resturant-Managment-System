@@ -10,6 +10,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Item</title>
+        <link rel="stylesheet" href="Style/additem.css">
+
 
 </head>
 <body>
@@ -25,7 +27,6 @@
     <input type="submit" value="Add Item">
 </form>
 
-<%-- Display success/failure message --%>
 <%
     String message = request.getParameter("message");
     if (message != null) {

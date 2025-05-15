@@ -15,7 +15,7 @@ public class OrderItem {
     public OrderItem(int orderItemId, Item item, int quantity) {
         this.orderItemId = orderItemId;
         this.item = item;
-        this.itemId = item.getItemId();
+        this.itemId = item.getId();
         this.quantity = quantity;
         this.price = item.getPrice();
         this.totalPrice = price * quantity;
@@ -35,7 +35,7 @@ public class OrderItem {
 
     public void setItem(Item item) {
         this.item = item;
-        this.itemId = item.getItemId();
+        this.itemId = item.getId();
         this.price = item.getPrice();
         this.totalPrice = price * quantity;
     }

@@ -12,7 +12,6 @@ public class ItemDAO {
         this.connection = connection;
     }
 
-    // Method to get all items from the database
     public List<Item> getAllItems() throws SQLException {
         List<Item> items = new ArrayList<>();
         String sql = "SELECT * FROM items";
@@ -28,7 +27,6 @@ public class ItemDAO {
         return items;
     }
 
-    // Method to get a specific item by its ID
     public Item getItemById(int id) throws SQLException {
         String sql = "SELECT * FROM items WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -44,36 +42,20 @@ public class ItemDAO {
         return null;
     }
 
-    // Method to insert a new item into the database
-    public boolean addItem(Item item) throws SQLException {
-        String sql = "INSERT INTO items (name, price) VALUES (?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, item.getName());
-            statement.setDouble(2, item.getPrice());
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
-        }
-    }
-
-    // Method to update an existing item
-    public boolean updateItem(Item item) throws SQLException {
-        String sql = "UPDATE items SET name = ?, price = ? WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, item.getName());
-            statement.setDouble(2, item.getPrice());
-            statement.setInt(3, item.getId());
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
-        }
-    }
-
-    // Method to delete an item
-    public boolean deleteItem(int id) throws SQLException {
-        String sql = "DELETE FROM items WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
-        }
-    }
+        public boolean addItem(Item item) {
+            String sql = "INSERT INTO items (name, price) VALUES (?, ?)";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, item.getName());
+                statement.setDouble(2, item.getPrice());
+                int rowsAffected = statement.executeUpdate();
+                return rowsAffected > 0;
+            } catch (SQLException e) {
+                System.out.println("SQL Error while adding item: " + e.getMessage());
+                return false;
+            }
 }
+
+    }
+
+
+

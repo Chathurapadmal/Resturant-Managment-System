@@ -5,15 +5,9 @@
 <html>
 <head>
     <title>POS System</title>
-    <style>
-        body { font-family: Arial; }
-        .container { display: flex; }
-        .items, .order { margin: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
-        .items { width: 40%; background-color: #fff3e6; }
-        .order { width: 50%; background-color: #f9f9f9; }
-        .item-row { margin-bottom: 10px; }
-        .total-box { font-weight: bold; margin-top: 10px; }
-    </style>
+    <link rel="stylesheet" href="Style/pos.css">
+
+
 </head>
 <body>
     <h2>New Order</h2>
@@ -40,7 +34,6 @@
             <div class="order">
                 <h3>Order Summary</h3>
                 <p>Items selected will show after submission.</p>
-                <!-- Summary will be displayed after submission or via JS in enhancement -->
             </div>
         </div>
 

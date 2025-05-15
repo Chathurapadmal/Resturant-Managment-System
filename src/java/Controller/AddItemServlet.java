@@ -2,7 +2,6 @@ package servlet;
 
 import DAO.ItemDAO;
 import Model.Item;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
@@ -18,9 +17,8 @@ public class AddItemServlet extends HttpServlet {
 
     public void init() {
         try {
-            // Replace with your DB credentials
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3309/resturentsystem");
+            var forName = Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3309/resturentsystem" , "root" , "" );
         } catch (Exception e) {
             e.printStackTrace();
         }

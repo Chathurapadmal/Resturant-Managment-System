@@ -1,0 +1,81 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff8f3;
+  margin: 0;
+  padding: 40px 20px;
+  color: #ff6600;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ff6600;
+}
+
+form {
+  background-color: #ffffff;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.15);
+  border: 2px solid #ffcc99;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #ffcc99;
+  border-radius: 10px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  background-color: #fff8f3;
+  transition: border 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  outline: none;
+  border-color: #ff6600;
+}
+
+input[type="submit"] {
+  background-color: #ff6600;
+  color: white;
+  font-size: 1.1rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+input[type="submit"]:hover {
+  background-color: #e65500;
+}
+
+p {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  form {
+    padding: 20px;
+  }
+
+  input[type="submit"] {
+    font-size: 1rem;
+  }
+}
