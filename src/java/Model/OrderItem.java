@@ -3,9 +3,9 @@ package Model;
 public class OrderItem {
     private int orderItemId;
     private Item item;
-    private int itemId; // Needed for setItemId
+    private int itemId;
     private int quantity;
-    private double price; // Needed for setPrice
+    private double price;
     private double totalPrice;
 
     public OrderItem() {
@@ -57,8 +57,6 @@ public class OrderItem {
         this.totalPrice = totalPrice;
     }
 
-    // ✅ Fixes for missing methods
-
     public int getItemId() {
         return itemId;
     }
@@ -74,5 +72,10 @@ public class OrderItem {
     public void setPrice(double price) {
         this.price = price;
         this.totalPrice = price * quantity;
+    }
+
+    // ✅ Added for use in JSP
+    public String getName() {
+        return item != null ? item.getName() : "Unknown Item";
     }
 }

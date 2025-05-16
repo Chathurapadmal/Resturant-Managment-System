@@ -18,48 +18,51 @@ public class KitchenDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
+
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect("Login.jsp");
             return;
         }
 
-        Connection conn = null;
-
-        try {
-            dbdao db = new dbdao();
-            conn = db.getConnection();
-
+        try (Connection conn = dbdao.getConnection()) {
             OrderDAO dao = new OrderDAO(conn);
             List<Order> orders = dao.getAllOrders();
 
             request.setAttribute("orders", orders);
             RequestDispatcher rd = request.getRequestDispatcher("KitchenDashboard.jsp");
             rd.forward(request, response);
+
         } catch (Exception e) {
+            // Log full stack trace
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error");
-        } finally {
-            try {
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+            // Send developer-friendly error message to browser for debugging
+            response.setContentType("text/plain");
+            response.getWriter().println("Error loading kitchen dashboard:");
+            response.getWriter().println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Connection conn = null;
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
-        try {
-            dbdao db = new dbdao();
-            conn = db.getConnection();
+        String action = request.getParameter("action");
+        String orderIdParam = request.getParameter("orderId");
 
-            String action = req.getParameter("action");
-            int orderId = Integer.parseInt(req.getParameter("orderId"));
+        if (action == null || orderIdParam == null || orderIdParam.isEmpty()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters.");
+            return;
+        }
+
+        try (Connection conn = dbdao.getConnection()) {
+            int orderId = Integer.parseInt(orderIdParam);
 
             OrderDAO dao = new OrderDAO(conn);
 
@@ -73,22 +76,21 @@ public class KitchenDashboardServlet extends HttpServlet {
                 case "delete":
                     dao.deleteOrder(orderId);
                     break;
-                case "edit":
-                    // Optional: Add edit logic here
-                    break;
+                default:
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action.");
+                    return;
             }
 
-            res.sendRedirect("KitchenDashboardServlet");
+            response.sendRedirect("KitchenDashboardServlet");
 
+        } catch (NumberFormatException nfe) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid order ID.");
         } catch (Exception e) {
             e.printStackTrace();
-            res.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Order update failed");
-        } finally {
-            try {
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+            response.setContentType("text/plain");
+            response.getWriter().println("Error updating order:");
+            response.getWriter().println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
 }

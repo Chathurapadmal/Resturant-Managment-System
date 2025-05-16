@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Order {
     private int id;
@@ -11,11 +12,12 @@ public class Order {
     private Timestamp orderDate;
     private String phone;
     private String cashierName;
-    private int orderid;
-    private String WaiterName;
-    private String CustomerName;
-    private String OrderItem;
+    private String waiterName;
+    private String customerName;
+    private List<OrderItem> orderItems; // represents all items in the order
 
+    // Default constructor
+    public Order() {}
 
     // Constructor for inserting a new order
     public Order(int tableId, int waiterId, double totalAmount, String status, String phone, String cashierName) {
@@ -26,9 +28,6 @@ public class Order {
         this.phone = phone;
         this.cashierName = cashierName;
     }
-
-    // Empty constructor for setters
-    public Order() {}
 
     // Getters and Setters
     public int getId() { return id; }
@@ -55,17 +54,12 @@ public class Order {
     public String getCashierName() { return cashierName; }
     public void setCashierName(String cashierName) { this.cashierName = cashierName; }
 
-    public int getOrderid() { return orderid; }
-    public void setOrderid(int orderid) { this.orderid = orderid; }
+    public String getCustomerName() { return customerName; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
 
-    public String getCustomerName() { return CustomerName;}
-    public void setCustomerName(String CustomerName) { this.CustomerName = CustomerName; }
-    
+    public String getWaiterName() { return waiterName; }
+    public void setWaiterName(String waiterName) { this.waiterName = waiterName; }
 
-    public String getWaiterName() {return WaiterName; }
-    public void setWaiterName(String WaiterName) { this.WaiterName = WaiterName; }
-    
-    public String getOrderItem() { return OrderItem; }
-    public void setOrderItem(String OrderItem) { this.OrderItem = OrderItem; }
-    
+    public List<OrderItem> getOrderItems() { return orderItems; }
+    public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = orderItems; }
 }

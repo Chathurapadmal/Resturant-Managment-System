@@ -5,6 +5,9 @@ public class Item {
     private String name;
     private double price;
 
+    public Item() {
+    }
+
     public Item(int id, String name, double price) {
         this.id = id;
         this.name = name;
@@ -23,7 +26,7 @@ public class Item {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) { // <-- THIS IS THE MISSING METHOD
         this.name = name;
     }
 
@@ -34,5 +37,4 @@ public class Item {
     public void setPrice(double price) {
         this.price = price;
     }
-
 }
