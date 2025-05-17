@@ -4,82 +4,43 @@
     Author     : Chathura
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login - Restaurant POS</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #ff7f00;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-box {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            width: 300px;
-        }
-        .login-box h2 {
-            text-align: center;
-            color: #ff7f00;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #333;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ff7f00;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        .login-box button {
-            width: 100%;
-            padding: 10px;
-            background: #ff7f00;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .login-box button:hover {
-            background: #e56d00;
-        }
-        .error {
-            color: red;
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 14px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Restaurant POS</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="Style/Login.css" rel="stylesheet" />
 </head>
 <body>
+  <div class="container">
     <div class="login-box">
-        <h2>Login</h2>
-        <form action="LoginServlet" method="post">
-            <input type="text" name="username" placeholder="Username" required />
-            <input type="password" name="password" placeholder="Password" required />
-            <button type="submit">Login</button>
-        </form>
-        <div class="error">
-            <%= request.getAttribute("error") != null ? request.getAttribute("error") : "" %>
+      <img src="logo.png" alt="Logo" class="logo" />
+      <h2>Login</h2><br><br>
+
+ 
+
+      <form action="LoginServlet" method="post">
+        <input type="text" name="username" placeholder="Username" required />
+        
+        <div class="password-wrapper">
+          <input type="password" name="password" placeholder="Password" required />
         </div>
+
+        <button type="submit">LOGIN</button>
+      </form>
+
+      
+           <% if (request.getAttribute("error") != null) { %>
+        <div style="color: red; margin-bottom: 15px;">
+          <%= request.getAttribute("error") %>
+        </div>
+      <% } %>
+      
+      
     </div>
+  </div>
 </body>
 </html>

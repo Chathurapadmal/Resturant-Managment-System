@@ -53,7 +53,7 @@ public class DashboardServlet extends HttpServlet {
         request.setAttribute("datesJson", datesJson);
         request.setAttribute("totalsJson", totalsJson);
 
-        RequestDispatcher rd = request.getRequestDispatcher("Dashboard.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("Admin_Dashboard.jsp");
         rd.forward(request, response);
     }
 }

@@ -5,8 +5,8 @@ public class OrderItem {
     private Item item;
     private int itemId;
     private int quantity;
-    private double price;
-    private double totalPrice;
+    private double price;      // unit price
+    private double totalPrice; // quantity * price
 
     public OrderItem() {
         // Needed for servlet instantiation
@@ -18,7 +18,7 @@ public class OrderItem {
         this.itemId = item.getId();
         this.quantity = quantity;
         this.price = item.getPrice();
-        this.totalPrice = price * quantity;
+        this.totalPrice = this.price * this.quantity;
     }
 
     public int getOrderItemId() {
@@ -35,26 +35,11 @@ public class OrderItem {
 
     public void setItem(Item item) {
         this.item = item;
-        this.itemId = item.getId();
-        this.price = item.getPrice();
-        this.totalPrice = price * quantity;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-        this.totalPrice = this.price * quantity;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+        if (item != null) {
+            this.itemId = item.getId();
+            this.price = item.getPrice();
+            this.totalPrice = this.price * this.quantity;
+        }
     }
 
     public int getItemId() {
@@ -65,17 +50,47 @@ public class OrderItem {
         this.itemId = itemId;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+        this.totalPrice = this.price * this.quantity;
+    }
+
     public double getPrice() {
         return price;
     }
 
     public void setPrice(double price) {
         this.price = price;
-        this.totalPrice = price * quantity;
+        this.totalPrice = this.price * this.quantity;
     }
 
-    // ✅ Added for use in JSP
-    public String getName() {
-        return item != null ? item.getName() : "Unknown Item";
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    // Convenience methods for JSP compatibility
+
+    /** 
+     * Returns the item name for JSP.
+     * Matches getItemName() used in JSP
+     */
+    public String getItemName() {
+        return (item != null) ? item.getName() : "Unknown Item";
+    }
+
+    /** 
+     * Returns the unit price for JSP.
+     * Matches getUnitPrice() used in JSP
+     */
+    public double getUnitPrice() {
+        return this.price;
     }
 }

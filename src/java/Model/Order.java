@@ -14,7 +14,7 @@ public class Order {
     private String cashierName;
     private String waiterName;
     private String customerName;
-    private List<OrderItem> orderItems; // represents all items in the order
+    private List<OrderItem> orderItems; // list of all items in the order
 
     // Default constructor
     public Order() {}
@@ -62,4 +62,17 @@ public class Order {
 
     public List<OrderItem> getOrderItems() { return orderItems; }
     public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = orderItems; }
+
+    // Aliases for JSP convenience (matching Admin_Dashboard.jsp)
+    public String getPhoneNumber() {
+        return getPhone();
+    }
+
+    public int getOrderId() {
+        return getId();
+    }
+
+    public int getTableNumber() {
+        return getTableId();
+    }
 }
