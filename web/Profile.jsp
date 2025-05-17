@@ -1,18 +1,47 @@
-<%-- 
-    Document   : Profile
-    Created on : 17 May 2025, 15:48:30
-    Author     : Chathura
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*" %>
-<%@ page import="Model.Userm" %> <!-- Replace with your actual User class package -->
+<%@ page import="java.sql.*, DAO.dbdao, Model.Userm" %>
 <%@ page session="true" %>
+
 <%
-    Userm user = (Userm) session.getAttribute("loggedInUser");
-    if (user == null) {
+    Integer userId = (Integer) session.getAttribute("userId");
+
+    if (userId == null) {
         response.sendRedirect("login.jsp");
         return;
+    }
+
+    Connection con = null;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+    Userm user = null;
+
+    try {
+        con = dbdao.getConnection();
+        String sql = "SELECT * FROM users WHERE id = ?";
+        stmt = con.prepareStatement(sql);
+        stmt.setInt(1, userId);
+        rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            user = new Userm();
+            user.setId(rs.getInt("id"));
+            user.setFullName(rs.getString("full_name"));
+            user.setUsername(rs.getString("username"));
+            user.setRole(rs.getString("role"));
+            user.setBio(rs.getString("bio"));
+            user.setProfilePicture(rs.getString("profile_picture"));
+        } else {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        response.sendRedirect("login.jsp");
+        return;
+    } finally {
+        if (rs != null) rs.close();
+        if (stmt != null) stmt.close();
+        if (con != null) con.close();
     }
 %>
 
@@ -97,4 +126,3 @@
 
 </body>
 </html>
-

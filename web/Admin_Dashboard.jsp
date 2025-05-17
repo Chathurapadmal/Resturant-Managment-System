@@ -25,13 +25,21 @@
       <span class="material-symbols-outlined">account_circle</span>
     </button>
     <div class="dropdown">
-      <div class="icon-circle">
-        <span class="material-symbols-outlined">account_circle</span>
-      </div>
-      <form action="LogoutServlet" method="get">
-        <button class="signin-btn" type="submit">Logout</button>
-      </form>
-    </div>
+  <div class="icon-circle">
+    <span class="material-symbols-outlined">account_circle</span>
+  </div>
+
+  <!-- My Profile Button -->
+  <form action="Profile.jsp" method="get">
+    <button class="signin-btn" type="submit">My Profile</button>
+  </form>
+
+  <!-- Logout Button -->
+  <form action="LogoutServlet" method="get">
+    <button class="signin-btn" type="submit">Logout</button>
+  </form>
+</div>
+
   </div>
 </header>
 
@@ -51,6 +59,7 @@
       <form action="POSServlet"><button class="dropdown-btn">POS Invoice</button></form>
       <form action="add_item.jsp"><button class="dropdown-btn">Add Product</button></form>
       <form action="add_employee.jsp"><button class="dropdown-btn">Add Employee</button></form>
+      <form action="employee.jsp"><button class="dropdown-btn">Manage Employee</button></form>
     </div>
   </div>
 </nav>
