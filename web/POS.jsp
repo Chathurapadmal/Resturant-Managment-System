@@ -1,100 +1,121 @@
-<%@page import="java.util.List"%>
-<%@page import="Model.Item"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="Model.Item" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>POS System</title>
-    <link rel="stylesheet" href="Style/pos.css">
+    <style>
+        .menu, .order-summary { float: left; padding: 20px; }
+        .menu { width: 60%; }
+        .order-summary { width: 35%; background-color: #f4f4f4; }
+        .item-button { margin: 5px; padding: 10px; background-color: lightblue; cursor: pointer; display: inline-block; }
+        .order-item { margin-bottom: 10px; }
+        .qty-btn { margin: 0 5px; padding: 3px 6px; background-color: #ccc; border: none; cursor: pointer; }
+    </style>
+    <script>
+        let orderItems = [];
+
+        function addItem(id, name, price) {
+            id = Number(id); // Ensure it's a number
+            const existing = orderItems.find(item => item.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                orderItems.push({ id, name, price, quantity: 1 });
+            }
+            renderOrder();
+        }
+
+        function changeQuantity(id, change) {
+            id = Number(id);
+            const item = orderItems.find(item => item.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    orderItems = orderItems.filter(i => i.id !== id);
+                }
+                renderOrder();
+            }
+        }
+
+        function renderOrder() {
+            const list = document.getElementById("orderItems");
+            list.innerHTML = '';
+            let total = 0;
+            orderItems.forEach(function(item) {
+                total += item.price * item.quantity;
+                list.innerHTML += 
+                    '<li class="order-item">' +
+                    item.name + ' x ' + item.quantity + ' = Rs.' + (item.price * item.quantity).toFixed(2) +
+                    ' <button class="qty-btn" onclick="changeQuantity(' + item.id + ', 1)">+</button>' +
+                    ' <button class="qty-btn" onclick="changeQuantity(' + item.id + ', -1)">−</button>' +
+                    '</li>';
+            });
+            document.getElementById("totalAmount").innerText = total.toFixed(2);
+        }
+
+        function submitOrder() {
+            const form = document.getElementById("orderForm");
+            // Remove old hidden input if any
+            const oldInput = document.querySelector('input[name="itemsJson"]');
+            if (oldInput) {
+                form.removeChild(oldInput);
+            }
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "itemsJson";
+            input.value = JSON.stringify(orderItems);
+            form.appendChild(input);
+            form.submit();
+        }
+    </script>
 </head>
 <body>
-    <h2>New Order</h2>
 
-    <!-- ACTION added as # to disable page reload -->
-    <form id="orderForm" action="#" method="post" onsubmit="return false;">
-        <label>Customer Name: <input type="text" name="customerName" required></label>
-        <label>Waiter: <input type="text" name="waiterName" required></label>
-        <label>Table: <input type="number" name="tableId" required></label>
-
-        <div class="container">
-            <div class="items">
-                <h3>Item List</h3>
-                <%
-                    List<Item> itemList = (List<Item>) request.getAttribute("itemList");
-                    for (Item item : itemList) {
-                %>
-                <div class="item-row">
-                    <input type="checkbox" name="itemId" value="<%= item.getId() %>">
-                    <%= item.getName() %> - Rs. <%= item.getPrice() %>
-                    Qty: <input type="number" name="qty_<%= item.getId() %>" min="1" value="1">
-                </div>
-                <% } %>
-            </div>
+<div class="menu">
+    <h2>Menu</h2>
+    <%
+        List<Item> items = (List<Item>) request.getAttribute("itemList");
+        if (items != null) {
+            for (Item item : items) {
+    %>
+        <div class="item-button" onclick="addItem(<%= item.getId() %>, '<%= item.getName().replace("'", "\\'") %>', <%= item.getPrice() %>)">
+            <strong><%= item.getName() %></strong> - Rs.<%= item.getPrice() %>
         </div>
+    <%
+            }
+        }
+    %>
+</div>
 
-        <div class="total-box">
-            <button type="button" id="placeOrderBtn">Place Order</button>
-            <button type="button" id="printBillBtn" style="display:none;">Print Bill</button>
-        </div>
+<div class="order-summary">
+    <h3>Selected Items</h3>
+    <ul id="orderItems"></ul>
+    <p>Total: Rs.<span id="totalAmount">0.00</span></p>
+    
+    <form id="orderForm" action="POSServlet" method="post">
+        Customer Name: <input type="text" name="customerName" required><br>
+        Phone: <input type="text" name="phone"><br>
+        Table ID: <input type="number" name="tableId" required><br>
+        Waiter Name: <input type="text" name="waiterName" required><br>
+        Cashier Name: <input type="text" name="cashierName" required><br>
+        <button type="button" onclick="submitOrder()">Proceed to Payment</button>
     </form>
 
-    <script>
-        const orderForm = document.getElementById('orderForm');
-        const placeOrderBtn = document.getElementById('placeOrderBtn');
-        const printBillBtn = document.getElementById('printBillBtn');
-        let createdOrderId = null;
+    <%
+        Integer orderId = (Integer) request.getAttribute("orderId");
+        if (orderId != null) {
+    %>
+        <p><strong>Order ID: <%= orderId %></strong></p>
+        <script>
+            window.onload = function() {
+                window.print(); // Auto print after payment
+            };
+        </script>
+    <% } %>
+</div>
 
-        placeOrderBtn.addEventListener('click', function (e) {
-            e.preventDefault(); // 💥 Cancel any accidental default form submission
-
-            const formData = new FormData(orderForm);
-            const selectedItems = [];
-
-            const newFormData = new FormData();
-            newFormData.append('customerName', formData.get('customerName'));
-            newFormData.append('waiterName', formData.get('waiterName'));
-            newFormData.append('tableId', formData.get('tableId'));
-
-            document.querySelectorAll('input[name="itemId"]:checked').forEach(item => {
-                const itemId = item.value;
-                const qty = document.querySelector(`input[name="qty_${itemId}"]`).value;
-                newFormData.append('itemId', itemId);
-                newFormData.append(`qty_${itemId}`, qty);
-                selectedItems.push(itemId);
-            });
-
-            if (selectedItems.length === 0) {
-                alert("Please select at least one item.");
-                return;
-            }
-
-            fetch('POSServlet', {
-                method: 'POST',
-                body: newFormData
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    createdOrderId = data.orderId;
-                    printBillBtn.style.display = 'inline-block';
-                    alert("Order placed successfully!");
-                } else {
-                    alert("Order failed: " + (data.message || 'Unknown error.'));
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                alert("Error placing order.");
-            });
-        });
-
-        printBillBtn.addEventListener('click', function () {
-            if (createdOrderId) {
-                window.open('PrintBill.jsp?orderId=' + createdOrderId, '_blank');
-            } else {
-                alert("No order to print.");
-            }
-        });
-    </script>
 </body>
 </html>

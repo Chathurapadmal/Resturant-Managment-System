@@ -1,0 +1,45 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #2eabff;
+  color: white;
+  font-size: 14px;
+  border: 1px solid #0099ff;
+  margin-top: 1rem;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #5ccaff;
+}
+
+thead th {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #66bef8;
+  vertical-align: top;
+}
+
+tbody tr:hover {
+  background-color: #3f3f3f;
+}
+
+ul {
+  padding-left: 16px;
+  margin: 0;
+}
+
+ul li {
+  list-style: disc;
+}
+
+p {
+  color: white;
+  margin-top: 1rem;
+}

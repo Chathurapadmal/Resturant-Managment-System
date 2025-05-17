@@ -12,6 +12,7 @@ public class ItemDAO {
         this.connection = connection;
     }
 
+    // Retrieve all items
     public List<Item> getAllItems() throws SQLException {
         List<Item> items = new ArrayList<>();
         String sql = "SELECT * FROM items";
@@ -27,6 +28,7 @@ public class ItemDAO {
         return items;
     }
 
+    // Retrieve a specific item by ID
     public Item getItemById(int id) throws SQLException {
         String sql = "SELECT * FROM items WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -42,20 +44,17 @@ public class ItemDAO {
         return null;
     }
 
-        public boolean addItem(Item item) {
-            String sql = "INSERT INTO items (name, price) VALUES (?, ?)";
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, item.getName());
-                statement.setDouble(2, item.getPrice());
-                int rowsAffected = statement.executeUpdate();
-                return rowsAffected > 0;
-            } catch (SQLException e) {
-                System.out.println("SQL Error while adding item: " + e.getMessage());
-                return false;
-            }
-}
-
+    // Add a new item to the database
+    public boolean addItem(Item item) {
+        String sql = "INSERT INTO items (name, price) VALUES (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, item.getName());
+            statement.setDouble(2, item.getPrice());
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("SQL Error while adding item: " + e.getMessage());
+            return false;
+        }
     }
-
-
-
+}

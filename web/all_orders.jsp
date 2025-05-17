@@ -7,7 +7,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="Model.Order" %>
 <%@ page import="Model.OrderItem" %>  <%-- Added import for OrderItem --%>
-
+<html>
+    <head>
+        
+        <link rel="stylesheet" href="Style/allorder.css">
+        
+    </head>>
+    <body>
 <%
     List<Order> orders = (List<Order>) request.getAttribute("orderList");
     if (orders != null && !orders.isEmpty()) {
@@ -63,3 +69,4 @@
 <%
     }
 %>
+    </body></html>>
