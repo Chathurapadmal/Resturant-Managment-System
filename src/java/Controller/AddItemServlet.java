@@ -1,79 +1,72 @@
-package servlet;
+package com.restaurantsystem.servlets;
 
-import DAO.ItemDAO;
-import Model.Item;
-
+import java.io.*;
+import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
-@WebServlet("/AddItemServlet")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1,  // 1MB
-        maxFileSize = 1024 * 1024 * 10,               // 10MB
-        maxRequestSize = 1024 * 1024 * 15)            // 15MB
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, // 1MB
+                 maxFileSize = 1024 * 1024 * 5,     // 5MB
+                 maxRequestSize = 1024 * 1024 * 10) // 10MB
+
+@WebServlet ("/AddItemServlet")
 public class AddItemServlet extends HttpServlet {
 
-    private Connection connection;
-    private static final String UPLOAD_DIR = "uploads";
-
-    @Override
-    public void init() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3309/resturentsystem", "root", "");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String name = request.getParameter("name");
         String priceStr = request.getParameter("price");
-        Part filePart = request.getPart("image");
-        String fileName = new File(filePart.getSubmittedFileName()).getName();
+        String category = request.getParameter("category");
+
+        Part filePart = request.getPart("productImage");
+        String fileName = extractFileName(filePart);
+        String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) uploadDir.mkdir();
+
+        String imagePath = "uploads" + File.separator + fileName;
+        filePart.write(uploadPath + File.separator + fileName);
+
+        double price = Double.parseDouble(priceStr);
 
         try {
-            double price = Double.parseDouble(priceStr);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3309/resturentsystem", "root", ""
+            );
 
-            // Save the image file
-            String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIR;
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) uploadDir.mkdir();
+            String sql = "INSERT INTO items (name, price, image, category) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setDouble(2, price);
+            ps.setString(3, imagePath);
+            ps.setString(4, category);
 
-            filePart.write(uploadPath + File.separator + fileName);
+            int result = ps.executeUpdate();
+            conn.close();
 
-            // Create and insert item
-            Item newItem = new Item(0, name, price, fileName);
-            ItemDAO itemDAO = new ItemDAO(connection);
-
-            boolean success = itemDAO.addItem(newItem);
-
-            if (success) {
+            if (result > 0) {
                 response.sendRedirect("add_item.jsp?message=Item+added+successfully");
             } else {
-                response.sendRedirect("add_item.jsp?message=Failed+to+add+item");
+                response.sendRedirect("add_item.jsp?message=Error+adding+item");
             }
+
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("add_item.jsp?message=Error+adding+item");
+            response.sendRedirect("add_item.jsp?message=Server+Error");
         }
     }
 
-    @Override
-    public void destroy() {
-        try {
-            if (connection != null) connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        for (String token : contentDisp.split(";")) {
+            if (token.trim().startsWith("filename")) {
+                return token.substring(token.indexOf('=') + 2, token.length() - 1);
+            }
         }
+        return "";
     }
 }

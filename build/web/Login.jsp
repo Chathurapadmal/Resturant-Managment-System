@@ -4,38 +4,43 @@
     Author     : Chathura
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Add Item</title>
-    <link rel="stylesheet" href="Style/additem.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Restaurant POS</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="Style/Login.css" rel="stylesheet" />
 </head>
 <body>
-<h2>Add New Menu Item</h2>
+  <div class="container">
+    <div class="login-box">
+      <img src="logo.png" alt="Logo" class="logo" />
+      <h2>Login</h2><br><br>
 
-<form action="AddItemServlet" method="post" enctype="multipart/form-data">
-    <label for="name">Item Name:</label><br>
-    <input type="text" name="name" id="name" required><br><br>
+ 
 
-    <label for="price">Item Price (Rs):</label><br>
-    <input type="number" name="price" id="price" step="0.01" required><br><br>
+      <form action="LoginServlet" method="post">
+        <input type="text" name="username" placeholder="Username" required />
+        
+        <div class="password-wrapper">
+          <input type="password" name="password" placeholder="Password" required />
+        </div>
 
-    <label for="image">Item Image:</label><br>
-    <input type="file" name="image" id="image" accept="image/*" required><br><br>
+        <button type="submit">LOGIN</button>
+      </form>
 
-    <input type="submit" value="Add Item">
-</form>
-
-<%
-    String message = request.getParameter("message");
-    if (message != null) {
-%>
-    <p style="color:green;"><%= message %></p>
-<%
-    }
-%>
-
+      
+           <% if (request.getAttribute("error") != null) { %>
+        <div style="color: red; margin-bottom: 15px;">
+          <%= request.getAttribute("error") %>
+        </div>
+      <% } %>
+      
+      
+    </div>
+  </div>
 </body>
 </html>

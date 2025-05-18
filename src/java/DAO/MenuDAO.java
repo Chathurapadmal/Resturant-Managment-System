@@ -1,6 +1,6 @@
 package DAO;
 
-import Controller.MenuServlet;
+import Model.Item;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,50 +16,46 @@ public class MenuDAO {
         }
     }
 
-    public List<MenuServlet> getAllMenuItems() {
-        List<MenuServlet> items = new ArrayList<>();
+    public List<Item> getAllMenuItems() {
+        List<Item> items = new ArrayList<>();
         String sql = "SELECT * FROM items";
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                items.add(new MenuServlet(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        
-                )
-                        }
-        }
-         catch (SQLException e) {
+                items.add(new Item(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getDouble("price")
+                ));
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return items;
     }
 
-    public void insertMenuItem(MenuServlet item) {
-        String sql = "INSERT INTO items (name, price, description) VALUES (?, ?, ?)";
+    public void insertMenuItem(Item item) {
+        String sql = "INSERT INTO items (name, price) VALUES (?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, item.getName());
             ps.setDouble(2, item.getPrice());
-            ps.setString(3, item.getImage());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public MenuServlet getMenuItemById(int id) {
-        MenuServlet item = null;
-        String sql = "SELECT * FROM menu_items WHERE id = ?";
+    public Item getMenuItemById(int id) {
+        Item item = null;
+        String sql = "SELECT * FROM items WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    item = new MenuServlet(
-                            rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getDouble("price"),
-                            rs.getString("description")
+                    item = new Item(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price")
                     );
                 }
             }
@@ -69,13 +65,12 @@ public class MenuDAO {
         return item;
     }
 
-    public void updateMenuItem(MenuServlet item) {
-        String sql = "UPDATE menu_items SET name=?, price=?, description=? WHERE id=?";
+    public void updateMenuItem(Item item) {
+        String sql = "UPDATE items SET name=?, price=? WHERE id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, item.getName());
             ps.setDouble(2, item.getPrice());
-            ps.setString(3, item.getDescription());
-            ps.setInt(4, item.getId());
+            ps.setInt(3, item.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,7 +78,7 @@ public class MenuDAO {
     }
 
     public void deleteMenuItem(int id) {
-        String sql = "DELETE FROM menu_items WHERE id=?";
+        String sql = "DELETE FROM items WHERE id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();

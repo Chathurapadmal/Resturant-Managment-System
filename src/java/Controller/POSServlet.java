@@ -15,9 +15,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet("/POSServlet")
 public class POSServlet extends HttpServlet {
@@ -28,7 +26,15 @@ public class POSServlet extends HttpServlet {
         try (Connection conn = dbdao.getConnection()) {
             ItemDAO itemDAO = new ItemDAO(conn);
             List<Item> items = itemDAO.getAllItems();
-            request.setAttribute("itemList", items);
+
+            // Group items by category
+            Map<String, List<Item>> categorizedItems = new HashMap<>();
+            for (Item item : items) {
+                String category = item.getCategory(); // Make sure getCategory() exists and returns category name
+                categorizedItems.computeIfAbsent(category, k -> new ArrayList<>()).add(item);
+            }
+
+            request.setAttribute("categorizedItems", categorizedItems);
             request.getRequestDispatcher("pos.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,13 +82,20 @@ public class POSServlet extends HttpServlet {
             order.setCashierName(cashierName);
             order.setTotalAmount(totalAmount);
             order.setStatus("pending");
-            order.setWaiterId(1); // use session/user id if available
+            order.setWaiterId(1); // Replace with real user ID/session info
 
             int orderId = orderDAO.insertOrderWithItems(order, orderItems);
 
-            // Show the receipt and trigger print
+            // Reload items for display after order submission
+            ItemDAO itemDAO = new ItemDAO(conn);
+            List<Item> items = itemDAO.getAllItems();
+            Map<String, List<Item>> categorizedItems = new HashMap<>();
+            for (Item item : items) {
+                String category = item.getCategory();
+                categorizedItems.computeIfAbsent(category, k -> new ArrayList<>()).add(item);
+            }
+            request.setAttribute("categorizedItems", categorizedItems);
             request.setAttribute("orderId", orderId);
-            request.setAttribute("itemList", new ItemDAO(conn).getAllItems());
             request.getRequestDispatcher("pos.jsp").forward(request, response);
 
         } catch (Exception e) {

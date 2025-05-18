@@ -24,10 +24,9 @@
                 for (product p : products) {
         %>
         <div class="menu-item">
-            <img src="<%= p.getImagePath() %>" alt="Product Image" />
+            <img src="<%= p.getImage() %>" alt="Product Image" />
             <h3><%= p.getName() %></h3>
             <p>Price: $<%= p.getPrice() %></p>
-            <p><%= p.getIngredients() %></p>
         </div>
         <%
                 }
