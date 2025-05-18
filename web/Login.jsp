@@ -12,11 +12,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Restaurant POS</title>
   <link href="Style/Login.css" rel="stylesheet" />
+  
 </head>
 <body>
   <div class="container">
     <div class="login-box">
-            <img src="img/logo.png" alt="Infinity Dine" class="logo-img" />
 
       <img src="img/logo.png" alt="Logo" class="logo" />
       <h2>Login</h2><br><br>

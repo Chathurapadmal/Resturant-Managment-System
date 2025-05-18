@@ -8,7 +8,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Dashboard</title>
-  <link href="Style.css" rel="stylesheet" type="text/css"/>
   <link href="Style/Dashboard.css" rel="stylesheet" type="text/css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
