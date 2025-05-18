@@ -34,18 +34,17 @@ public class AuthFilter implements Filter {
 
         String role = (String) session.getAttribute("role");
 
-        // Restrict access based on roles
         if (uri.contains("AdminDashboard.jsp") || uri.contains("add_user.jsp")) {
             if (!"admin".equalsIgnoreCase(role)) {
                 response.sendRedirect("Login.jsp");
                 return;
             }
-        } else if (uri.contains("KitchenDashboardServlet")) {
+        } else if (uri.contains("KitchenDashboardServlet , POSServlet")) {
             if (!"waiter".equalsIgnoreCase(role) && !"admin".equalsIgnoreCase(role)) {
                 response.sendRedirect("Login.jsp");
                 return;
             }
-        } else if (uri.contains("POSServlet")) {
+        } else if (uri.contains("POSServlet , KitchenDashboardServlet")) {
             if (!"cashier".equalsIgnoreCase(role) && !"admin".equalsIgnoreCase(role)) {
                 response.sendRedirect("Login.jsp");
                 return;

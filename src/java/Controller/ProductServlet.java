@@ -36,7 +36,7 @@ public class ProductServlet extends HttpServlet {
 
         filePart.write(uploadPath + File.separator + fileName);
 
-        product product = new product(name, price, ingredients, "img/" + fileName);
+        product product = new product(name, price,  "img/" + fileName);
 
         ProductDAO productDAO = new ProductDAO();
         productDAO.addProduct(product);

@@ -16,10 +16,13 @@
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Login.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/MenuServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Profile.jsp</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/AddItemServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/POSServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/ProductServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/KitchenDashboard.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/KitchenDashboardServlet.java</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/AddEmployeeServlet.java</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/add_employee.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/Order.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/all_orders.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/MenuDAO.java</file>
@@ -37,6 +40,7 @@
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Admin_Dashboard.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/AllorderServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/OrderItem.java</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/employee.jsp</file>
         </group>
     </open-files>
 </project-private>

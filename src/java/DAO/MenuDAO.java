@@ -18,7 +18,7 @@ public class MenuDAO {
 
     public List<MenuServlet> getAllMenuItems() {
         List<MenuServlet> items = new ArrayList<>();
-        String sql = "SELECT * FROM menu_items";
+        String sql = "SELECT * FROM items";
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -26,21 +26,22 @@ public class MenuDAO {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
-                        rs.getString("description")
-                ));
-            }
-        } catch (SQLException e) {
+                        
+                )
+                        }
+        }
+         catch (SQLException e) {
             e.printStackTrace();
         }
         return items;
     }
 
     public void insertMenuItem(MenuServlet item) {
-        String sql = "INSERT INTO menu_items (name, price, description) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO items (name, price, description) VALUES (?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, item.getName());
             ps.setDouble(2, item.getPrice());
-            ps.setString(3, item.getDescription());
+            ps.setString(3, item.getImage());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -4,6 +4,9 @@ import DAO.OrderDAO;
 import Model.Order;
 import com.sun.jdi.connect.spi.Connection;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +27,12 @@ public class BillServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int orderId = Integer.parseInt(req.getParameter("id"));
 
-        Order order = orderDAO.getOrderById(orderId); // <-- You need to implement this
+        Order order = null;
+        try {
+            order = orderDAO.getOrderById(orderId); // <-- You need to implement this
+        } catch (SQLException ex) {
+            Logger.getLogger(BillServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         req.setAttribute("order", order);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("bill.jsp");

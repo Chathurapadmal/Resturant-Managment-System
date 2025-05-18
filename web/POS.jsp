@@ -209,8 +209,8 @@ max-height: 4rem;
 
 
   <nav class="nav-links">
-    <a href="#" class="nav-link">Kitchen</a>
-    <a href="#" class="nav-link">Order</a>
+    <a href="KitchenDashboardServlet" class="nav-link">Kitchen</a>
+    <a href="AllorderServlet" class="nav-link">Order</a>
   </nav>
 
 </header>

@@ -46,15 +46,18 @@ public class ItemDAO {
 
     // Add a new item to the database
     public boolean addItem(Item item) {
-        String sql = "INSERT INTO items (name, price) VALUES (?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, item.getName());
-            statement.setDouble(2, item.getPrice());
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            System.out.println("SQL Error while adding item: " + e.getMessage());
-            return false;
-        }
+    String sql = "INSERT INTO items (name, price, image) VALUES (?, ?, ?)";
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setString(1, item.getName());
+        stmt.setDouble(2, item.getPrice());
+        stmt.setString(3, item.getImage());
+        stmt.executeUpdate();
+        return true;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
 }
+
+    }
+

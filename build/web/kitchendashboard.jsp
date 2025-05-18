@@ -84,6 +84,17 @@
 </head>
 <body>
 
+    
+    <header class="navbar">
+
+
+  <nav class="nav-links">
+    <a href="POSServlet" class="nav-link">POS</a>
+    <a href="AllorderServlet" class="nav-link">Order</a>
+  </nav>
+
+</header>
+    
 <h2>Kitchen Dashboard</h2>
 
 <div class="dashboard">
