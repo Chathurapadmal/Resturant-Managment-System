@@ -17,7 +17,7 @@
 
 <header class="header">
   <div class="logo">
-    <img src="icons/logo.png" alt="Infinity Dine Logo" class="logo-img" />
+    <img src="img/logo.png" alt="Infinity Dine" class="logo-img" />
   </div>   
   <div class="title">ADMIN PANEL</div>
   <div class="dropdown-container" tabindex="0">
@@ -139,6 +139,12 @@
   </tbody>
 </table>
 
+<!-- Customer Feedback Pie Chart Section -->
+<h2 class="section-title">Customer Feedback Summary</h2>
+<div class="chart-container" style="max-width: 400px; margin: auto;">
+  <canvas id="feedbackChart"></canvas>
+</div>
+
 <script>
   const dates = <%= request.getAttribute("datesJson") != null ? request.getAttribute("datesJson") : "[]" %>;
   const totals = <%= request.getAttribute("totalsJson") != null ? request.getAttribute("totalsJson") : "[]" %>;
@@ -160,6 +166,29 @@
     options: {
       scales: {
         y: { beginAtZero: true }
+      }
+    }
+  });
+
+  const feedbackLabels = <%= request.getAttribute("feedbackLabelsJson") != null ? request.getAttribute("feedbackLabelsJson") : "[]" %>;
+  const feedbackData = <%= request.getAttribute("feedbackDataJson") != null ? request.getAttribute("feedbackDataJson") : "[]" %>;
+
+  const ctxFeedback = document.getElementById('feedbackChart').getContext('2d');
+  const feedbackChart = new Chart(ctxFeedback, {
+    type: 'pie',
+    data: {
+      labels: feedbackLabels,
+      datasets: [{
+        label: 'Feedback Count',
+        data: feedbackData,
+        backgroundColor: ['#4CAF50', '#2196F3', '#FF9800'],
+        hoverOffset: 20
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom' }
       }
     }
   });

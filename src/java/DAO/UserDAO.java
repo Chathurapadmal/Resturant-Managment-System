@@ -6,9 +6,10 @@ import java.sql.*;
 public class UserDAO {
     private Connection conn;
 
+    // Constructor to establish connection using dbdao
     public UserDAO() {
         try {
-            conn = dbdao.getConnection();
+            conn = dbdao.getConnection();  // Ensure dbdao.getConnection() works properly
         } catch (Exception e) {
             e.printStackTrace();
         }

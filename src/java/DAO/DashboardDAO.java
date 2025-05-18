@@ -3,6 +3,8 @@ package DAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import Model.Order;
 import Controller.TopItem;
 
@@ -50,7 +52,7 @@ public class DashboardDAO {
     public List<Order> getTodayOrders() {
         List<Order> orders = new ArrayList<>();
 
-        String sql = "SELECT id, table_id, phone, cashier_name FROM orders WHERE DATE(order_date) = CURDATE()";
+        String sql = "SELECT id, table_id, phone, cashier_name, customer_name FROM orders WHERE DATE(order_date) = CURDATE()";
 
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -60,6 +62,7 @@ public class DashboardDAO {
                 order.setTableId(rs.getInt("table_id"));
                 order.setPhone(rs.getString("phone"));
                 order.setCashierName(rs.getString("cashier_name"));
+                order.setCustomerName(rs.getString("customer_name"));
                 orders.add(order);
             }
         } catch (SQLException e) {
@@ -72,9 +75,10 @@ public class DashboardDAO {
     // Top 5 selling menu items
     public List<TopItem> getTopSellingItems() {
         List<TopItem> items = new ArrayList<>();
-        String sql = "SELECT m.name, SUM(oi.quantity) AS total_sold " +
-                     "FROM order_items oi JOIN menu_items m ON oi.menu_item_id = m.id " +
-                     "GROUP BY oi.menu_item_id ORDER BY total_sold DESC LIMIT 5";
+        // Adjust the query to your real table/column names for items
+        String sql = "SELECT i.name, SUM(oi.quantity) AS total_sold " +
+                     "FROM order_items oi JOIN items i ON oi.item_id = i.id " +
+                     "GROUP BY oi.item_id ORDER BY total_sold DESC LIMIT 5";
 
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -104,5 +108,29 @@ public class DashboardDAO {
         }
 
         return sales;
+    }
+
+    // Get feedback counts for pie chart ("Best", "Good", "Sad")
+    public Map<String, Integer> getFeedbackCounts() {
+        Map<String, Integer> feedbackCounts = new HashMap<>();
+
+        // Assuming feedback table stores category as "Best", "Good", "Sad" in a 'category' column
+        String sql = "SELECT category, COUNT(*) AS count FROM feedback GROUP BY category";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                feedbackCounts.put(rs.getString("category"), rs.getInt("count"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Provide default 0 counts for missing categories to avoid JS errors
+        if (!feedbackCounts.containsKey("Best")) feedbackCounts.put("Best", 0);
+        if (!feedbackCounts.containsKey("Good")) feedbackCounts.put("Good", 0);
+        if (!feedbackCounts.containsKey("Sad")) feedbackCounts.put("Sad", 0);
+
+        return feedbackCounts;
     }
 }

@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 
-
 @WebServlet("/DashboardServlet")
 public class DashboardServlet extends HttpServlet {
 
@@ -30,21 +29,32 @@ public class DashboardServlet extends HttpServlet {
 
         int todaysOrders = dao.getTodayOrdersCount();
         double todaysSales = dao.getTodaySalesTotal();
-        List<Model.Order> orders = dao.getTodayOrders();
+        List<Order> orders = dao.getTodayOrders();
         List<TopItem> topItems = dao.getTopSellingItems();
         List<TopItem> salesSummary = dao.getSalesSummary();
 
-        // Prepare data for Chart.js
+        // Prepare data for Chart.js Sales Summary
         List<String> dates = new ArrayList<>();
         List<Integer> totals = new ArrayList<>();
         for (TopItem item : salesSummary) {
-            dates.add(item.getName());  // using date as name
-            totals.add(item.getTotalSold());  // using daily total as totalSold
+            dates.add(item.getName());  // Assuming name holds the date or label
+            totals.add(item.getTotalSold());  // Using totalSold as sales value
+        }
+
+        // Prepare feedback data for Pie Chart
+        Map<String, Integer> feedbackCounts = dao.getFeedbackCounts();
+        List<String> feedbackLabels = new ArrayList<>();
+        List<Integer> feedbackData = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : feedbackCounts.entrySet()) {
+            feedbackLabels.add(entry.getKey());
+            feedbackData.add(entry.getValue());
         }
 
         Gson gson = new Gson();
         String datesJson = gson.toJson(dates);
         String totalsJson = gson.toJson(totals);
+        String feedbackLabelsJson = gson.toJson(feedbackLabels);
+        String feedbackDataJson = gson.toJson(feedbackData);
 
         request.setAttribute("todaysOrders", todaysOrders);
         request.setAttribute("todaysSales", todaysSales);
@@ -52,6 +62,8 @@ public class DashboardServlet extends HttpServlet {
         request.setAttribute("topItems", topItems);
         request.setAttribute("datesJson", datesJson);
         request.setAttribute("totalsJson", totalsJson);
+        request.setAttribute("feedbackLabelsJson", feedbackLabelsJson);
+        request.setAttribute("feedbackDataJson", feedbackDataJson);
 
         RequestDispatcher rd = request.getRequestDispatcher("Admin_Dashboard.jsp");
         rd.forward(request, response);
