@@ -1,187 +1,179 @@
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #8fd2ff;
-      color: #1f2937;
-    }
-
-.logo{
-    
-    width: auto;
-    height: 6rem;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e6f0fa;
+  color: #1a2935;
+  margin: 0;
+  padding: 20px;
 }
-    .header {
-max-height: 4rem;
-     display: flex; align-items: center; gap: 1rem;
-        background: linear-gradient(to right, rgba(33, 122, 255, 1), rgba(33, 122, 255, 0.8));              
 
-    }
+h1 {
+  color: #0d47a1;
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-    .header button {
-      background-color: #4f46e5;
-      color: white;
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    .header .profile {
-        display: block;
-        margin-right: 2rem;
-    margin-left: auto;
-      font-size: 1.5rem;
-      font-weight: bold;
-      align-self: center;
-    }
-
-
-
-
-.navbar {
+.container {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #1e1e2f; 
-  padding: 0.8rem 1.5rem;
-  color: white;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
+.menu, .order-summary {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(13, 71, 161, 0.15);
+  padding: 20px;
+  width: 45%;
+  min-width: 320px;
 }
 
-.nav-link {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
+.category-section {
+  margin-bottom: 30px;
+}
+
+.category-title {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #0d47a1;
+  border-bottom: 3px solid #1976d2;
+  padding-bottom: 6px;
+  margin-bottom: 18px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 18px;
+}
+
+.menu-item {
+  cursor: pointer;
+  border: 1.5px solid #90caf9;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  background: linear-gradient(145deg, #d0e2ff, #a1c6ff);
+  box-shadow: 6px 6px 10px #a0c5ff, -6px -6px 10px #ffffff;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  user-select: none;
+}
+
+.menu-item:hover {
+  background-color: #1976d2;
+  color: #fff;
+  box-shadow: 8px 8px 15px #0b3d91, -8px -8px 15px #3a7ddf;
+}
+
+.menu-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 2px solid #0d47a1;
+  box-shadow: 0 0 8px #0d47a1aa;
+}
+
+.menu-item-name {
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 1.1em;
+}
+
+.menu-item-price {
+  color: #0d47a1;
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.order-summary h3 {
+  color: #0d47a1;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 700;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 15px #90caf9aa;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f0f7ff;
+}
+
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #90caf9;
+  color: #1a2935;
+  text-align: center;
+  font-weight: 600;
+}
+
+th {
+  background-color: #1976d2;
+  color: #fff;
+  font-weight: 700;
+}
+
+tr:hover {
+  background-color: #bbdefb;
+}
+
+input[type="number"] {
+  width: 60px;
+  padding: 6px 8px;
+  border: 1.5px solid #90caf9;
+  border-radius: 6px;
+  font-weight: 600;
+  text-align: center;
+  color: #0d47a1;
+}
+
+input[type="text"], input[type="number"][name="table"] {
+  padding: 8px 10px;
+  font-size: 1em;
+  border-radius: 6px;
+  border: 1.5px solid #90caf9;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 300px;
+  color: #0d47a1;
+  font-weight: 600;
+  box-shadow: inset 0 1px 3px #bbdefb;
+}
+
+.remove-btn {
+  cursor: pointer;
+  color: #d32f2f;
+  font-weight: 700;
+  font-size: 1.3em;
+  user-select: none;
   transition: color 0.3s;
 }
 
-.nav-link:hover {
-  color: #f7a440; 
+.remove-btn:hover {
+  color: #b71c1c;
 }
 
-.profile {
-  margin-left: auto;
-  font-weight: bold;
-  padding-left: 2rem;
+button[type="submit"] {
+  display: block;
+  margin: 25px auto 0;
+  background-color: #1976d2;
+  color: white;
+  padding: 12px 40px;
+  font-size: 1.2em;
+  font-weight: 700;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(25, 118, 210, 0.6);
+  transition: background-color 0.3s, box-shadow 0.3s;
+  user-select: none;
 }
 
-
-
-
-
-
-
-
-    .container {
-      display: flex;
-      gap: 2rem;
-      padding: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .menu, .order {
-      flex: 1;
-      background-color: #ffffff;
-      padding: 1rem;
-      border-radius: 12px;
-      min-width: 320px;
-    }
-
-    .menu h2, .order h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .category {
-      margin-bottom: 2rem;
-    }
-
-    .category-button {
-      width: 100%;
-      background-color: #46b3e5;
-      color: white;
-      padding: 0.6rem;
-      border: none;
-      border-radius: 6px;
-      text-align: left;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-bottom: 0.5rem;
-    }
-
-    .items-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-      gap: 0.8rem;
-      padding-top: 0.5rem;
-    }
-
-    .item-box {
-      height: 60px;
-      background-color: #e0e7ff;
-      border-radius: 8px;
-    }
-
-    .input-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0.5rem 0;
-    }
-
-    .input-row span {
-      flex: 1;
-    }
-
-    .input-row input {
-      flex: 2;
-      padding: 0.5rem;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      background-color: #f1f5f9;
-    }
-
-    .order-list {
-      margin: 1rem 0;
-    }
-
-    .order-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.4rem 0;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .order-summary {
-      margin-top: 1rem;
-    }
-
-    .order-summary .input-row input {
-      width: 100%;
-    }
-
-    .order button {
-      margin-top: 1.5rem;
-      width: 100%;
-      padding: 0.8rem;
-      background-color: #46b3e5;
-      color: white;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-    }
+button[type="submit"]:hover {
+  background-color: #0d47a1;
+  box-shadow: 0 8px 16px rgba(13, 71, 161, 0.8);
+}

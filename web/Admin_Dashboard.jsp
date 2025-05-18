@@ -25,21 +25,20 @@
       <span class="material-symbols-outlined">account_circle</span>
     </button>
     <div class="dropdown">
-  <div class="icon-circle">
-    <span class="material-symbols-outlined">account_circle</span>
-  </div>
+      <div class="icon-circle">
+        <span class="material-symbols-outlined">account_circle</span>
+      </div>
 
-  <!-- My Profile Button -->
-  <form action="Profile.jsp" method="get">
-    <button class="signin-btn" type="submit">My Profile</button>
-  </form>
+      <!-- My Profile Button -->
+      <form action="profile.jsp" method="get">
+        <button class="signin-btn" type="submit">My Profile</button>
+      </form>
 
-  <!-- Logout Button -->
-  <form action="LogoutServlet" method="get">
-    <button class="signin-btn" type="submit">Logout</button>
-  </form>
-</div>
-
+      <!-- Logout Button -->
+      <form action="LogoutServlet" method="get">
+        <button class="signin-btn" type="submit">Logout</button>
+      </form>
+    </div>
   </div>
 </header>
 
@@ -80,7 +79,6 @@
   <thead>
     <tr>
       <th>Customer Name</th>
-      <th>Phone Number</th>
       <th>Order Number</th>
       <th>Table Number</th>
     </tr>
@@ -92,8 +90,7 @@
         for (Order o : orders) {
     %>
       <tr>
-        <td><%= o.getCustomerName() %></td>
-        <td><%= o.getPhoneNumber() %></td>
+        <td><%= o.getCustomerName() != null ? o.getCustomerName() : "N/A" %></td>
         <td><%= o.getOrderId() %></td>
         <td><%= o.getTableNumber() %></td>
       </tr>
@@ -102,7 +99,7 @@
       } else {
     %>
       <tr>
-        <td colspan="4">No orders available.</td>
+        <td colspan="3">No orders available.</td>
       </tr>
     <% } %>
   </tbody>

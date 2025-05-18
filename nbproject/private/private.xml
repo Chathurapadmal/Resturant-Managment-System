@@ -9,6 +9,7 @@
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/BillServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/LogoutServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/OrderControll.java</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Menu.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/ProductDAO.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/AuthFilter.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/MenuItem.java</file>
@@ -17,6 +18,7 @@
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/MenuServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Profile.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/AddItemServlet.java</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/PathUtil.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/POSServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/ProductServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/KitchenDashboard.jsp</file>
@@ -24,23 +26,29 @@
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/AddEmployeeServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/add_employee.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/Order.java</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/DashboardDAO.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/all_orders.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/MenuDAO.java</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Style/pos.css</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/pos.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/DashboardServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/Item.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/Userm.java</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/product.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/OrderDAO.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/UpdateProfileServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/CompleteOrderServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Style/Dashboard.css</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Style/add_item.css</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/DAO/UserDAO.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/LoginServlet.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/PrintBill.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/Admin_Dashboard.jsp</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Controller/AllorderServlet.java</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/index.html</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/OrderItem.java</file>
             <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/web/employee.jsp</file>
+            <file>file:/D:/Programs/DEA%20assignment/Resturant-Managment-System/src/java/Model/Menu.java</file>
         </group>
     </open-files>
 </project-private>

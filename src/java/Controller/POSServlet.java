@@ -1,106 +1,120 @@
 package Controller;
 
-import DAO.ItemDAO;
+import DAO.MenuDAO;
 import DAO.OrderDAO;
 import DAO.dbdao;
 import Model.Item;
 import Model.Order;
 import Model.OrderItem;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.sql.Connection;
-import java.util.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/POSServlet")
 public class POSServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try (Connection conn = dbdao.getConnection()) {
-            ItemDAO itemDAO = new ItemDAO(conn);
-            List<Item> items = itemDAO.getAllItems();
+    private Connection conn;
 
-            // Group items by category
-            Map<String, List<Item>> categorizedItems = new HashMap<>();
-            for (Item item : items) {
-                String category = item.getCategory(); // Make sure getCategory() exists and returns category name
-                categorizedItems.computeIfAbsent(category, k -> new ArrayList<>()).add(item);
+    @Override
+    public void init() {
+        conn = dbdao.getConnection();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Fetch menu items dynamically from DB
+        MenuDAO menuDAO = new MenuDAO();
+        List<Item> menuItems = menuDAO.getAllMenuItems();
+
+        // Set menu items as request attribute and forward to JSP
+        request.setAttribute("menuItems", menuItems);
+        request.getRequestDispatcher("pos.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Set UTF-8 encoding and content type
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+
+        try {
+            // Read form fields
+            String customerName = request.getParameter("customerName");
+            String tableStr = request.getParameter("table");
+            String[] itemIds = request.getParameterValues("itemId");
+            String[] qtys = request.getParameterValues("qty");
+            String[] prices = request.getParameterValues("price");
+
+            if (tableStr == null || itemIds == null || qtys == null || prices == null) {
+                response.getWriter().println("Missing order details. Please try again.");
+                return;
             }
 
-            request.setAttribute("categorizedItems", categorizedItems);
-            request.getRequestDispatcher("pos.jsp").forward(request, response);
-        } catch (Exception e) {
+            int tableId = Integer.parseInt(tableStr);
+
+            // Create order
+            Order order = new Order();
+            order.setCustomerName(customerName != null ? customerName : "");
+            order.setTableId(tableId);
+            order.setStatus("pending");
+            order.setCashierName("cashier"); // replace with real user/session if needed
+
+            // Build order items list
+            List<OrderItem> orderItems = new ArrayList<>();
+            double totalAmount = 0;
+
+            for (int i = 0; i < itemIds.length; i++) {
+                int id = Integer.parseInt(itemIds[i]);
+                int quantity = Integer.parseInt(qtys[i]);
+                double price = Double.parseDouble(prices[i]);
+
+                if(quantity <= 0) continue;  // skip zero quantity items
+
+                OrderItem item = new OrderItem();
+                item.setItemId(id);
+                item.setQuantity(quantity);
+                item.setPrice(price);
+
+                totalAmount += price * quantity;
+
+                orderItems.add(item);
+            }
+
+            if(orderItems.isEmpty()) {
+                response.getWriter().println("Please order at least one item.");
+                return;
+            }
+
+            order.setTotalAmount(totalAmount);
+
+            // Insert into DB
+            OrderDAO orderDAO = new OrderDAO(conn);
+            int orderId = orderDAO.insertOrderWithItems(order, orderItems);
+
+            // On success, show confirmation and link back
+            response.getWriter().println("<h3>Order placed successfully. Order ID: " + orderId + "</h3>");
+            response.getWriter().println("<a href='POSServlet'>Place another order</a>");
+
+        } catch (NumberFormatException | SQLException e) {
             e.printStackTrace();
-            response.sendError(500, "Error loading POS: " + e.getMessage());
+            response.getWriter().println("Error processing order: " + e.getMessage());
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String customerName = request.getParameter("customerName");
-        String phone = request.getParameter("phone");
-        int tableId = Integer.parseInt(request.getParameter("tableId"));
-        String waiterName = request.getParameter("waiterName");
-        String cashierName = request.getParameter("cashierName");
-        String itemsJson = request.getParameter("itemsJson");
-
-        Gson gson = new Gson();
-        Type itemListType = new TypeToken<List<Map<String, Object>>>() {}.getType();
-        List<Map<String, Object>> itemMapList = gson.fromJson(itemsJson, itemListType);
-
-        try (Connection conn = dbdao.getConnection()) {
-            OrderDAO orderDAO = new OrderDAO(conn);
-            List<OrderItem> orderItems = new ArrayList<>();
-            double totalAmount = 0;
-
-            for (Map<String, Object> map : itemMapList) {
-                OrderItem oi = new OrderItem();
-                int itemId = ((Double) map.get("id")).intValue();
-                int qty = ((Double) map.get("quantity")).intValue();
-                double price = (Double) map.get("price");
-
-                oi.setItemId(itemId);
-                oi.setQuantity(qty);
-                oi.setPrice(price);
-                totalAmount += price * qty;
-                orderItems.add(oi);
+    public void destroy() {
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
             }
-
-            Order order = new Order();
-            order.setCustomerName(customerName);
-            order.setPhone(phone);
-            order.setTableId(tableId);
-            order.setWaiterName(waiterName);
-            order.setCashierName(cashierName);
-            order.setTotalAmount(totalAmount);
-            order.setStatus("pending");
-            order.setWaiterId(1); // Replace with real user ID/session info
-
-            int orderId = orderDAO.insertOrderWithItems(order, orderItems);
-
-            // Reload items for display after order submission
-            ItemDAO itemDAO = new ItemDAO(conn);
-            List<Item> items = itemDAO.getAllItems();
-            Map<String, List<Item>> categorizedItems = new HashMap<>();
-            for (Item item : items) {
-                String category = item.getCategory();
-                categorizedItems.computeIfAbsent(category, k -> new ArrayList<>()).add(item);
-            }
-            request.setAttribute("categorizedItems", categorizedItems);
-            request.setAttribute("orderId", orderId);
-            request.getRequestDispatcher("pos.jsp").forward(request, response);
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            response.sendError(500, "Order failed: " + e.getMessage());
         }
     }
 }

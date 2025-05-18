@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head><title>All Employees</title></head>
+<link rel = "StyleSheet" href = "Style/emp.css">
 <body>
     <h2>Employee List</h2>
     <table border="1">
