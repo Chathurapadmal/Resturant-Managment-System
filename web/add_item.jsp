@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Add Item</title>
-    <link rel="stylesheet" href="Style/additem.css">
+    <link rel="stylesheet" href="Style/add_item.css">
 </head>
 <body>
 <h2>Add New Menu Item</h2>

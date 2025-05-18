@@ -6,7 +6,7 @@
     Integer userId = (Integer) session.getAttribute("userId");
 
     if (userId == null) {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("Login.jsp");
         return;
     }
 
@@ -31,12 +31,12 @@
             user.setBio(rs.getString("bio"));
             user.setProfilePicture(rs.getString("profile_picture"));
         } else {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("Login.jsp");
             return;
         }
     } catch (Exception e) {
         e.printStackTrace();
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("Login.jsp");
         return;
     } finally {
         if (rs != null) rs.close();
@@ -46,83 +46,88 @@
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Profile</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 30px;
-            background: #f2f2f2;
-        }
-        .profile-container {
-            background: #fff;
-            padding: 25px;
-            width: 500px;
-            margin: auto;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #555;
-        }
-        .info {
-            margin-top: 20px;
-        }
-        .info p {
-            margin: 5px 0;
-        }
-        .edit-form {
-            margin-top: 20px;
-        }
-        .edit-form input, .edit-form textarea {
-            width: 100%;
-            padding: 8px;
-            margin-top: 8px;
-            margin-bottom: 15px;
-        }
-        .edit-form button {
-            padding: 10px 15px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+
+  <!-- Google Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style1.css" />
 </head>
 <body>
 
-<div class="profile-container">
-    <h2>My Profile</h2>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="icons/logo.png" alt="Infinity Dine Logo" class="logo-img" />
+    </div>   
+    <div class="title">PROFILE</div>
+    <div class="dropdown-container" tabindex="0">
+      <button class="profile-btn" aria-label="Profile">
+        <span class="material-symbols-outlined">account_circle</span>
+      </button>
+      <div class="dropdown">
+        <div class="icon-circle">
+          <span class="material-symbols-outlined">account_circle</span>
+        </div>
+        <form action="LogoutServlet" method="post">
+          <button class="signin-btn" type="submit">Sign out</button>
+        </form>
+      </div>
+    </div>
+  </header>
 
-    <img class="profile-pic" src="<%= (user.getProfilePicture() != null && !user.getProfilePicture().isEmpty()) ? "uploads/" + user.getProfilePicture() : "default-avatar.png" %>" alt="Profile Picture">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <form action="orderListServlet"><button>Dashboard</button></form>
+    <form action="KitchenDashboardServlet"><button>Kitchen</button></form>
+    <form action="POSServlet"><button>POS Invoice</button></form>
+    <form action="add_item.jsp"><button>Add Product</button></form>
+  </nav>
 
-    <div class="info">
-        <p><strong>Name:</strong> <%= user.getFullName() %></p>
-        <p><strong>Role:</strong> <%= user.getRole() %></p>
-        <p><strong>Bio:</strong></p>
-        <p><%= user.getBio() != null ? user.getBio() : "No bio yet." %></p>
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <div class="profile-layout">
+      <!-- Left Side -->
+      <div class="profile-left">
+        <img src="<%= (user.getProfilePicture() != null && !user.getProfilePicture().isEmpty()) ? "uploads/" + user.getProfilePicture() : "default-avatar.png" %>" alt="Profile" class="profile-pic" />
+        <div class="name"><%= user.getFullName() %></div>
+        <div class="title-card"><%= user.getRole() %></div>
+      </div>
+
+      <!-- Right Side -->
+      <div class="profile-right">
+        <div class="bio">
+          <%= (user.getBio() != null && !user.getBio().isEmpty()) ? user.getBio() : "No bio yet." %>
+        </div>
+
+        <hr style="margin: 20px 0;">
+
+        <form class="edit-form" action="UpdateProfileServlet" method="post" enctype="multipart/form-data">
+          <label for="fullName">Full Name</label>
+          <input type="text" name="fullName" value="<%= user.getFullName() %>" required>
+
+          <label for="bio">Bio</label>
+          <textarea name="bio" rows="4"><%= user.getBio() != null ? user.getBio() : "" %></textarea>
+
+          <label for="profilePicture">Change Profile Picture</label>
+          <input type="file" name="profilePicture" accept="image/*">
+
+          <button type="submit">Update Profile</button>
+        </form>
+      </div>
     </div>
 
-    <hr>
-
-    <form class="edit-form" action="UpdateProfileServlet" method="post" enctype="multipart/form-data">
-        <label for="fullName">Full Name</label>
-        <input type="text" name="fullName" value="<%= user.getFullName() %>" required>
-
-        <label for="bio">Bio</label>
-        <textarea name="bio" rows="4"><%= user.getBio() != null ? user.getBio() : "" %></textarea>
-
-        <label for="profilePicture">Change Profile Picture</label>
-        <input type="file" name="profilePicture" accept="image/*">
-
-        <button type="submit">Update Profile</button>
-    </form>
-</div>
+    <!-- Bottom Center Sign Out Button -->
+    <div class="signout-container">
+      <form action="LogoutServlet" method="post">
+        <button class="signout-btn" type="submit">Sign Out</button>
+      </form>
+    </div>
+  </main>
 
 </body>
 </html>
